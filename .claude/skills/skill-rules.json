@@ -1,0 +1,192 @@
+{
+    "version": "1.0",
+    "description": "Skill activation triggers for the learnlara stack (Laravel 12 + Inertia 2 + Vue 3 + Filament + PostgreSQL, Docker). Controls when skills are auto-suggested. Pipeline dev-* skills are usually invoked via slash commands; entries here add prompt-based suggestions. Regenerate/audit with /skill-rules-manager after adding or removing skills.",
+    "skills": {
+        "bugfix": {
+            "type": "workflow",
+            "enforcement": "suggest",
+            "priority": "high",
+            "description": "Systematic bug fixing across Vue/Inertia -> controller -> Eloquent -> DB layers.",
+            "pathPatterns": [
+                "app/**/*.php",
+                "resources/js/**/*.vue",
+                "resources/js/**/*.ts",
+                "tests/**/*.php"
+            ],
+            "promptTriggers": {
+                "keywords": [
+                    "bug",
+                    "blad",
+                    "błąd",
+                    "nie dziala",
+                    "nie działa",
+                    "broken",
+                    "fix",
+                    "napraw",
+                    "sentry",
+                    "exception",
+                    "wyjatek",
+                    "500",
+                    "stack trace"
+                ],
+                "intentPatterns": [
+                    "(fix|napraw|debug).*?(bug|blad|błąd|issue|error)",
+                    "(why|dlaczego).*?(not work|nie dziala|nie działa|failing)"
+                ]
+            }
+        },
+        "code-quality": {
+            "type": "domain",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Stack-agnostic quality audit: architecture (SOLID), performance (N+1, Big O), simplicity (YAGNI), patterns.",
+            "pathPatterns": [
+                "app/**/*.php",
+                "resources/js/**/*.vue",
+                "resources/js/**/*.ts"
+            ],
+            "promptTriggers": {
+                "keywords": [
+                    "refaktor",
+                    "refactor",
+                    "tech debt",
+                    "dlug techniczny",
+                    "code quality",
+                    "jakosc kodu",
+                    "audyt",
+                    "audit",
+                    "n+1",
+                    "uprosc",
+                    "simplify"
+                ],
+                "intentPatterns": [
+                    "(audit|audyt|review).*?(quality|jakosc|architecture|architektur)",
+                    "(refactor|refaktor|simplify|uprosc).*?(code|kod)"
+                ]
+            }
+        },
+        "agent-browser": {
+            "type": "tool",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Browser automation/E2E via agent-browser CLI: navigate, fill forms, screenshots, scrape, test UI.",
+            "pathPatterns": [],
+            "promptTriggers": {
+                "keywords": [
+                    "agent-browser",
+                    "screenshot",
+                    "otworz strone",
+                    "otwórz stronę",
+                    "wypelnij formularz",
+                    "wypełnij formularz",
+                    "scrape",
+                    "testuj ui",
+                    "e2e",
+                    "przegladarka",
+                    "przeglądarka",
+                    "browser"
+                ],
+                "intentPatterns": [
+                    "(open|otworz|otwórz).*?(page|strone|stronę|url)",
+                    "(screenshot|zrzut).*?(ekranu|screen)?",
+                    "(test|testuj).*?(ui|interfejs|browser|przegladarka|przeglądarka)"
+                ]
+            }
+        },
+        "coolify-manager": {
+            "type": "tool",
+            "enforcement": "suggest",
+            "priority": "low",
+            "description": "Manage Coolify deployments, services, databases, SSL, env vars via CLI/API.",
+            "pathPatterns": [
+                "docker/**/*",
+                "Dockerfile",
+                "docker-compose.yml"
+            ],
+            "promptTriggers": {
+                "keywords": [
+                    "coolify",
+                    "deploy",
+                    "wdrozenie",
+                    "wdrożenie",
+                    "ssl",
+                    "kontener",
+                    "container",
+                    "produkcja",
+                    "production"
+                ],
+                "intentPatterns": [
+                    "(deploy|wdroz|wdróż).*?(app|aplikacj|coolify)",
+                    "(manage|zarzadz).*?(coolify|deployment|wdrozeni)"
+                ]
+            }
+        },
+        "dev-brainstorm": {
+            "type": "workflow",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Validate and refine an idea before planning (interactive dialog, pressure test).",
+            "pathPatterns": [],
+            "promptTriggers": {
+                "keywords": [
+                    "mam pomysl",
+                    "mam pomysł",
+                    "brainstorm",
+                    "co myslisz o",
+                    "co myślisz o",
+                    "chce zbudowac",
+                    "chcę zbudować",
+                    "przemysl",
+                    "przemyśl"
+                ],
+                "intentPatterns": [
+                    "(mam|i have).*?(pomysl|pomysł|idea)",
+                    "(help|pomoz|pomóż).*?(think|przemysl|przemyśl)"
+                ]
+            }
+        },
+        "plan-review": {
+            "type": "workflow",
+            "enforcement": "suggest",
+            "priority": "medium",
+            "description": "Multi-perspective plan review (VP Product / Engineering / Design) to find blockers and anti-patterns.",
+            "pathPatterns": [
+                "docs/plans/**/*.md",
+                "docs/brainstorms/**/*.md",
+                "docs/active/**/*.md"
+            ],
+            "promptTriggers": {
+                "keywords": [
+                    "przejrzyj plan",
+                    "review plan",
+                    "ocen plan",
+                    "oceń plan",
+                    "plan review"
+                ],
+                "intentPatterns": [
+                    "(review|przejrzyj|ocen|oceń).*?(plan|propozycj|design)"
+                ]
+            }
+        },
+        "zroastuj-mnie": {
+            "type": "workflow",
+            "enforcement": "suggest",
+            "priority": "low",
+            "description": "Interrogate the user about a plan/project until fully understood (stress-test).",
+            "pathPatterns": [],
+            "promptTriggers": {
+                "keywords": [
+                    "zroastuj",
+                    "roast",
+                    "podwaz",
+                    "podważ",
+                    "stress test",
+                    "przegadaj"
+                ],
+                "intentPatterns": [
+                    "(roast|zroastuj|podwaz|podważ).*?(mnie|plan|to|projekt)"
+                ]
+            }
+        }
+    }
+}
