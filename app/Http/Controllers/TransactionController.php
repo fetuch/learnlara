@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTransactionRequest;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class TransactionController extends Controller
 {
@@ -23,17 +23,9 @@ class TransactionController extends Controller
         //
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'amount' => ['required', 'integer', 'min:1'],
-            'occurred_on' => ['required', 'date'],
-            'type' => ['required', Rule::in(['income', 'expense'])],
-            'title' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-        ]);
-        
-        Transaction::create($validated);
+    public function store(StoreTransactionRequest $request)
+    {        
+        Transaction::create($request->validated());
 
         return redirect()->route('transactions.index')->with('success', 'Transakcja dodana');
     }
