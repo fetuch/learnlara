@@ -20,7 +20,7 @@ class TransactionController extends Controller
      */
     public function create()
     {
-        //
+        return view('transactions.create');
     }
 
     public function store(StoreTransactionRequest $request)
