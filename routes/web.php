@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('transactions', TransactionController::class);
+Route::resource('transactions', TransactionController::class)->except(['show']);

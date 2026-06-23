@@ -26,6 +26,7 @@
                     <th class="px-4 py-3 font-medium">Tytuł</th>
                     <th class="px-4 py-3 font-medium">Typ</th>
                     <th class="px-4 py-3 text-right font-medium">Kwota</th>
+                    <th class="px-4 py-3 text-right font-medium">Akcje</th>
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-100">
@@ -45,10 +46,21 @@
                         <td class="px-4 py-3 text-right font-mono">
                             {{ number_format($transaction->amount / 100, 2, ',', "\u{00A0}") }} zł
                         </td>
+                        <td>
+                            <a href="{{ route('transactions.edit', $transaction) }}" class="">
+                                Edytuj
+                            </a>
+
+                            <form method="POST" action="{{ route('transactions.destroy', $transaction) }}" onsubmit="return confirm('Na pewno?')">
+                                @csrf
+                                @method('DELETE')   {{-- to "podszywa" POST pod DELETE --}}
+                                <button type="submit">Usuń</button>
+                            </form>
+                        </td>
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-4 py-8 text-center text-gray-400">
+                        <td colspan="5" class="px-4 py-8 text-center text-gray-400">
                             Brak transakcji. Dodaj pierwszą.
                         </td>
                     </tr>
