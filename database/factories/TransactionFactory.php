@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\TransactionType;
 use App\Models\Transaction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +21,7 @@ class TransactionFactory extends Factory
         return [
             'amount' => fake()->numberBetween(100, 500000),
             'occurred_on' => fake()->date('Y-m-d'),
-            'type' => fake()->randomElement(['income', 'expense',]),
+            'type' => fake()->randomElement(TransactionType::cases()),
             'title' => fake()->sentence(),
             'description' => fake()->optional()->text(200),
         ];

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\TransactionType;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -26,7 +27,7 @@ class StoreTransactionRequest extends FormRequest
         return [
             'amount' => ['required', 'integer', 'min:1'],
             'occurred_on' => ['required', 'date'],
-            'type' => ['required', Rule::in(['income', 'expense'])],
+            'type' => ['required', Rule::enum(TransactionType::class)],
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
         ];

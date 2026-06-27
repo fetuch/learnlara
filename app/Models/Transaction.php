@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TransactionType;
 use Database\Factories\TransactionFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -23,6 +24,7 @@ class Transaction extends Model
         return [
             'occurred_on' => 'date',
             'amount' => 'integer',
+            'type' => TransactionType::class,
         ];
     }
 }
