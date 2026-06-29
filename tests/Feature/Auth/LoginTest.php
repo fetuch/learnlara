@@ -47,3 +47,12 @@ it('rejects wrong password', function () {
     $response->assertInvalid(['email']);
     $this->assertGuest();
 });
+
+it('logs out a user', function () {
+    $user = User::factory()->create();
+    $response = $this->actingAs($user)->post(route('logout'));
+
+    $response->assertRedirect(route('login'));
+    $response->assertSessionHas('success');
+    $this->assertGuest();
+});
