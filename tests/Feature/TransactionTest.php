@@ -1,6 +1,19 @@
 <?php
 
 use App\Models\Transaction;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+
+beforeEach(function () {
+    $this->actingAs(User::factory()->create());
+});
+
+it('redirects guest user to login page', function () {
+    Auth::logout();
+    $this->assertGuest();
+    $response = $this->get(route('transactions.index'));
+    $response->assertRedirect(route('login'));
+});
 
 it('displays transactions on the index page', function () {
     // Arrange
@@ -22,9 +35,9 @@ it('stores a new transaction', function () {
     // Act
     $response = $this->post(route('transactions.store'), [
         'title' => $title,
-        'amount' => 10000, 
-        'occurred_on' => '2020-08-22', 
-        'type' => 'expense', 
+        'amount' => 10000,
+        'occurred_on' => '2020-08-22',
+        'type' => 'expense',
     ]);
 
     // Assert
@@ -64,8 +77,8 @@ it('rejects invalid data', function (array $invalidData, string $errorField) {
 
     $response->assertInvalid([$errorField]);
 })->with([
-    'brak title'      => [['title' => ''], 'title'],
-    'amount = 0'      => [['amount' => 0], 'amount'],          // masz min:1
-    'zły type'        => [['type' => 'transfer'], 'type'],     // masz Rule::in
-    'zła data'        => [['occurred_on' => 'not-a-date'], 'occurred_on'],
+    'brak title' => [['title' => ''], 'title'],
+    'amount = 0' => [['amount' => 0], 'amount'],          // masz min:1
+    'zły type' => [['type' => 'transfer'], 'type'],     // masz Rule::in
+    'zła data' => [['occurred_on' => 'not-a-date'], 'occurred_on'],
 ]);
